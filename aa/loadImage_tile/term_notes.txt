@@ -1,0 +1,3 @@
+cd preload_loadImage_DICE_tile
+pwd
+cp sketch.js sketch-2.js

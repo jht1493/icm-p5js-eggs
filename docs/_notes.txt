@@ -1,0 +1,29 @@
+
+-------------------------------------------------------------------------------
+-- Install for preview using vscode and live server extension
+
+https://nodejs.org/en/
+
+https://code.visualstudio.com/download
+
+live server
+
+https://github.com/jht1493/explore-p5js
+
+
+-------------------------------------------------------------------------------
+-- install for preview using browser-sync
+
+https://github.com/processing/p5.js/wiki/Local-server
+
+sudo npm install -g browser-sync
+
+browser-sync start --server -f -w
+
+https://docs.npmjs.com/resolving-eacces-permissions-errors-when-installing-packages-globally
+
+https://marketplace.visualstudio.com/items?itemName=jasonlhy.vscode-browser-sync
+jasonlhy |  42,335 installs
+ 
+https://marketplace.visualstudio.com/items?itemName=jeremyrajan.browsersync
+Jeremy Rajan |  10,447 installs
