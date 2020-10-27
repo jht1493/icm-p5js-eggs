@@ -1,0 +1,16 @@
+
+# In visual studio code, Menu: View > Terminal
+# Or cmd-` (Apple command, back-tick char)
+
+# Create copy of sketch
+#
+# Change to directory
+cd aa/loadImage_tile
+
+# Check that you arrived safely
+#
+pwd
+
+# Make a copy of the sketch
+#
+cp sketch.js sketch-2.js
