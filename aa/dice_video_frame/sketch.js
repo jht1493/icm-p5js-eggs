@@ -1,7 +1,7 @@
 let a_video;
 let a_scan = {
   cuts: 32,
-  margin: 2,
+  margin: 8,
 };
 let a_src = {};
 let a_image;

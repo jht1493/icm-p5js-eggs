@@ -6,6 +6,7 @@ let s_color;
 let a_img;
 let a_bubbles = [];
 let a_paused;
+let a_circle;
 
 function preload() {
   // preload() runs once
@@ -80,67 +81,12 @@ function show_bubble(bub) {
   stroke(colr);
   strokeWeight(4);
   fill(colr);
-  // ellipse(bub.x, bub.y, bub.r * 2);
-  const w = bub.r * 2;
-  rect(bub.x, bub.y, w / 2, w);
-}
-
-function init_ui() {
-  a_canvas.mouseMoved(canvas_mouseMoved);
-
-  let cb_pause = createCheckbox('Pause', false);
-  cb_pause.style('font-size', '12pt');
-
-  cb_pause.style('margin', '2pt 2pt');
-  cb_pause.changed(function () {
-    a_paused = this.checked();
-  });
-
-  let save_btn = createButton('Save');
-  save_btn.style('font-size', '12pt');
-  save_btn.style('margin', '2pt 0pt');
-  save_btn.mousePressed(save_canvas);
-
-  let more_btn = createButton('More');
-  more_btn.style('font-size', '12pt');
-  more_btn.style('margin', '2pt 2pt');
-  more_btn.mousePressed(more_bubbles);
-
-  let reset_btn = createButton('Reset');
-  reset_btn.style('font-size', '12pt');
-  reset_btn.style('margin', '2pt 2pt');
-  reset_btn.mousePressed(reset_bubbles);
-
-  let a_span = createSpan('color:');
-  a_span.style('font-size', '16pt');
-  a_span.style('margin', '0pt 0pt 0pt 4pt');
-
-  let a_select = createSelect();
-  a_select.style('font-size', '12pt');
-  a_select.style('margin', '2pt 2pt');
-  a_select.option('random');
-  a_select.option('black');
-  a_select.option('white');
-  a_select.option('image');
-  a_select.selected('image');
-  a_select.changed(function () {
-    s_color = this.value();
-    print('s_color', s_color);
-  });
-
-  createP();
-
-  let b_span = createSpan('bg color:');
-  b_span.style('font-size', '16pt');
-  b_span.style('margin', '0pt 0pt 0pt 4pt');
-
-  let bc_slide = createSlider(0, 255, 100);
-  bc_slide.style('width', '256px');
-  bc_slide.input(function () {
-    bg_color = this.value();
-    print('bg_color', bg_color);
-    background(bg_color);
-  });
+  if (a_circle) {
+    circle(bub.x, bub.y, bub.r * 2);
+  } else {
+    const w = bub.r * 2;
+    rect(bub.x, bub.y, w / 2, w);
+  }
 }
 
 function reset_bubbles() {
@@ -170,16 +116,6 @@ function add_bubbles(n) {
 function add_bubble_mouseXY() {
   add_bubble(mouseX, mouseY);
   print('add_bubble_mouseXY', a_bubbles.length);
-}
-
-let save_count = 0;
-function save_canvas() {
-  let fname = 'bubr-' + save_count + '-';
-  fname += new Date().toISOString().substring(0, 10);
-  // 2020-10-26T16:17:17.843Z
-  print('save_btn mousePressed fname', fname);
-  saveCanvas(fname, 'png');
-  save_count += 1;
 }
 
 // from https://editor.p5js.org/jht1493/sketches/LrhcIzvr2
