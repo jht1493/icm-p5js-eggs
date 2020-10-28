@@ -43,7 +43,7 @@ function add_bubble(x, y) {
     ]);
   }
   // let r = random(1, 4);
-  let r = random([1, 2, 4]);
+  let r = random([1, 2, 4, 8]);
   // let r = random([4, 8, 16]);
   // let r = random([1, 2, 3]);
   let fuz = random([2, 4, 8]);
