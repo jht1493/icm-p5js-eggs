@@ -1,24 +1,37 @@
-let bg_color = 240;
+let bg_color = 100;
 let a_alpha = 60;
 let n_start = 20;
 let a_canvas;
 let s_color;
+let a_imgs = [];
 let a_img;
 let a_bubbles = [];
-let a_paused;
-let a_circle;
+let a_paused = 0;
+let a_grid = 1;
+let r_options = [[1, 2, 4], [2, 8, 16], [1, 2, 4, 8, 16, 32], [1], [2], [4]];
+let fuz_options = r_options;
+let r_index = 0;
+let fuz_index = 0;
+let s_brush = 'circle';
+let a_width = 400;
+let a_height = 500;
+let a_index = 0;
 
 function preload() {
-  // preload() runs once
-  // a_img = loadImage('images/jht-side-400.jpg');
-  a_img = loadImage('images/jht-hs-4x-cu.jpg');
-  // print('preload img', a_img)
+  for (let ii = 0; ii < img_names.length; ii++) {
+    a_imgs[ii] = loadImage('images/' + img_names[ii]);
+  }
 }
 
 function setup() {
-  a_canvas = createCanvas(a_img.width, a_img.height);
+  a_img = a_imgs[0];
+  let h_scale = a_img.height / a_img.width;
+  a_height = a_width * h_scale;
+  for (let ii = 0; ii < a_imgs.length; ii++) {
+    a_imgs[ii].resize(a_width, a_height);
+  }
+  a_canvas = createCanvas(a_width, a_height);
   background(bg_color);
-  // image(a_img, 0, 0);
   add_bubbles(n_start);
   init_ui();
 }
@@ -27,65 +40,6 @@ function draw() {
   if (a_paused) return;
   for (let bub of a_bubbles) {
     draw_bubble(bub);
-  }
-}
-
-function add_bubble(x, y) {
-  let colr;
-  if (s_color == 'white') {
-    colr = [255, 255, 255, a_alpha];
-  } else if (s_color == 'black') {
-    colr = [0, 0, 0, a_alpha];
-  } else if (s_color == 'random') {
-    colr = random([
-      [0, 0, 0, a_alpha],
-      [255, 255, 255, a_alpha],
-    ]);
-  }
-  // let r = random(1, 4);
-  let r = random([1, 2, 4, 8]);
-  // let r = random([4, 8, 16]);
-  // let r = random([1, 2, 3]);
-  let fuz = random([2, 4, 8]);
-  let alpha = a_alpha;
-  let bub = {
-    x,
-    y,
-    r,
-    fuz,
-    colr,
-    alpha,
-  };
-  a_bubbles.push(bub);
-}
-
-function draw_bubble(bub) {
-  move_bubble(bub);
-  show_bubble(bub);
-}
-
-function move_bubble(bub) {
-  bub.x = bub.x + random(-bub.fuz, bub.fuz);
-  bub.y = bub.y + random(-bub.fuz, bub.fuz);
-  // constrain(n, low, high)
-  bub.x = constrain(bub.x, 0, width);
-  bub.y = constrain(bub.y, 0, height);
-}
-
-function show_bubble(bub) {
-  let colr = bub.colr;
-  if (!colr) {
-    colr = a_img.get(bub.x, bub.y);
-    colr[3] = a_alpha;
-  }
-  stroke(colr);
-  strokeWeight(4);
-  fill(colr);
-  if (a_circle) {
-    circle(bub.x, bub.y, bub.r * 2);
-  } else {
-    const w = bub.r * 2;
-    rect(bub.x, bub.y, w / 2, w);
   }
 }
 
