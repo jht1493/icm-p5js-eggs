@@ -46,15 +46,16 @@ function show_num(label, num, opt) {
   }
 }
 
-let fps_tlast;
 // Show frames per second averaged over the last n frames
+let fps_tlast; // Array of frame start times
+let fps_nframes = 60 * 5;
 function show_fps() {
   if (!fps_tlast) {
     fps_tlast = [millis()];
-    return;
+    // Continue to have show_num create DOM span
   }
   fps_tlast.push(millis());
-  if (fps_tlast.length > 60 * 5) {
+  if (fps_tlast.length > fps_nframes) {
     fps_tlast.splice(0, 1);
   }
   let sum = 0;
