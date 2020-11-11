@@ -7,18 +7,18 @@ let a_song;
 let a_volume = 0.1;
 let a_pan = 0;
 let a_rate = 1;
-let sound_file = 'media/Untitled 3.m4a';
 
 function setup() {
   createCanvas(200, 200);
-  a_song = loadSound(sound_file, loaded);
+  a_song = loadSound('media/A Flat-G Sharp.mp3', loaded);
+  // a_song = loadSound('media/A Flat-G Sharp.mp3', loaded);
   // a_song = loadSound('media/C.mp3', loaded);
   // a_song = loadSound('media/Pentatonic on F Sharp.mp3', loaded);
   init_ui();
 }
 
 function loaded() {
-  print('loaded ', sound_file);
+  print('loaded ');
   print('a_song.duration()', a_song.duration());
   // a_song.play();
   // a_song.loop();
