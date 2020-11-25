@@ -1,87 +1,15 @@
-// Daniel Shiffman
-// http://codingtra.in
-// http://patreon.com/codingtrain
-// Code for: https://youtu.be/Pn1g1wjxl_0
-
-let a_song;
-let a_volume = 0.1;
-let a_pan = 0;
-let a_rate = 1;
-
-function setup() {
-  createCanvas(200, 200);
-  a_song = loadSound('media/A Flat-G Sharp.mp3', loaded);
-  // a_song = loadSound('media/A Flat-G Sharp.mp3', loaded);
-  // a_song = loadSound('media/C.mp3', loaded);
-  // a_song = loadSound('media/Pentatonic on F Sharp.mp3', loaded);
-  init_ui();
-}
-
-function loaded() {
-  print('loaded ');
-  print('a_song.duration()', a_song.duration());
-  // a_song.play();
-  // a_song.loop();
-  a_song.setVolume(a_volume);
-  // a_song.playMode('restart');
-}
-
-function draw() {
-  // background(random(255));
-  // a_song.pan(sliderPan.value());
-  // a_song.rate(sliderRate.value());
-  a_song.setVolume(a_volume);
-  // a_song.pan(a_pan);
-  // a_song.rate(a_rate);
-  show_num('currentTime', a_song.currentTime());
-  show_num('a_volume', a_volume);
-  show_num('a_pan', a_pan);
-  show_num('a_rate', a_rate);
-
-  // print('a_song.currentTime', a_song.currentTime())
-}
-
-function reset_action() {
-  a_volume = 0.05;
-  a_pan = 0;
-  a_rate = 1;
-}
-
-function loop1_action() {
-  // loop([startTime], [rate], [amp],
-  //    [cueLoopStart], [duration])
-  let startTime = 0;
-  let rate = 1;
-  let amp = 1;
-  let cueStart = 2;
-  let dur = 1;
-  a_song.loop(startTime, rate, amp, cueStart, dur);
-}
-
-function loop2_action() {
-  // loop([startTime], [rate], [amp],
-  //    [cueLoopStart], [duration])
-  let startTime = 0;
-  let rate = 1;
-  let amp = 1;
-  let cueStart = 4;
-  let dur = 1;
-  a_song.loop(startTime, rate, amp, cueStart, dur);
-}
-
-function play_action() {
-  a_song.play();
-}
-
-function stop_action() {
-  a_song.stop();
-}
-
+// -- init_ui -------------------------------------------
 function init_ui() {
   {
     let elm = createSpan().id('currentTime');
     elm.style('font-size', '30px');
   }
+
+  {
+    let elm = createSpan().id('duration');
+    elm.style('font-size', '30px');
+  }
+  createP();
 
   {
     let elm = createSpan().id('a_volume');
@@ -96,8 +24,8 @@ function init_ui() {
   {
     let elm = createSpan().id('a_rate');
     elm.style('font-size', '30px');
-    createP();
   }
+  createP();
 
   {
     let a_span = createSpan('volume:');
@@ -153,25 +81,19 @@ function init_ui() {
   {
     let a_button = createButton('playMode restart');
     a_button.style('font-size', '30px');
-    a_button.mousePressed(function () {
-      a_song.playMode('restart');
-    });
+    a_button.mousePressed(playMode_sustain_action);
   }
 
   {
     let a_button = createButton('sustain');
     a_button.style('font-size', '30px');
-    a_button.mousePressed(function () {
-      a_song.playMode('sustain');
-    });
+    a_button.mousePressed(playMode_sustain_action);
   }
 
   {
     let a_button = createButton('untilDone');
     a_button.style('font-size', '30px');
-    a_button.mousePressed(function () {
-      a_song.playMode('untilDone');
-    });
+    a_button.mousePressed(playMode_untilDone_action);
   }
   createP();
   // {
@@ -183,9 +105,7 @@ function init_ui() {
   {
     let a_button = createButton('loop0');
     a_button.style('font-size', '30px');
-    a_button.mousePressed(function () {
-      a_song.loop();
-    });
+    a_button.mousePressed(loop0_action);
   }
 
   {
