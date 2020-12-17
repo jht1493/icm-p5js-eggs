@@ -1,19 +1,38 @@
-let video;
+let a_camera;
+let a_mov;
 let poseNet;
 let pose;
 let skeleton;
 
 function setup() {
-  createCanvas(640, 480);
-  video = createCapture(VIDEO);
-  video.hide();
-  poseNet = ml5.poseNet(video, modelLoaded);
+  // createCanvas(640, 480);
+  createCanvas(1280 / 2, 720 / 2);
+
+  setup_mov();
+
+  // poseNet = ml5.poseNet(a_camera, modelLoaded);
+  poseNet = ml5.poseNet(a_mov, modelLoaded);
   poseNet.on('pose', gotPoses);
   init_ui();
 }
 
+function setup_mov() {
+  a_mov = createVideo('assets/yoga.mp4', () => {
+    a_mov.loop();
+    a_mov.volume(0);
+    print('a_mov width', a_mov.width, 'height', a_mov.height);
+    a_mov.size(width, height);
+    a_mov.showControls();
+  });
+}
+
+function setup_camera() {
+  a_camera = createCapture(VIDEO);
+  a_camera.hide();
+}
+
 function gotPoses(poses) {
-  //console.log(poses); 
+  //console.log(poses);
   if (poses.length > 0) {
     pose = poses[0].pose;
     skeleton = poses[0].skeleton;
@@ -25,10 +44,11 @@ function modelLoaded() {
 }
 
 function draw() {
-  image(video, 0, 0);
+  // image(a_camera, 0, 0);
+  image(a_mov, 0, 0, width, height);
   if (!pose) return;
   show_fps();
-  
+
   let eyeR = pose.rightEye;
   let eyeL = pose.leftEye;
   let d = dist(eyeR.x, eyeR.y, eyeL.x, eyeL.y);
@@ -55,10 +75,9 @@ function draw() {
     stroke(255);
     line(a.position.x, a.position.y, b.position.x, b.position.y);
   }
-
 }
 
-// 2020-11-04 jht: Rebuilt - original fails to duplicate. 
+// 2020-11-04 jht: Rebuilt - original fails to duplicate.
 //   Added ui.js
 // https://editor.p5js.org/codingtrain/sketches/ULA97pJXR
 // ml5.js: Pose Estimation with PoseNet
